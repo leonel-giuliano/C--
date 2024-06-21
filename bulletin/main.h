@@ -8,4 +8,6 @@ enum {
     ARGV_FILE
 };
 
+#define PRED_PATH "bulletin.csv"
+
 #endif
