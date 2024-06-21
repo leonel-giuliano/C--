@@ -10,4 +10,7 @@ enum {
 
 #define PRED_PATH "bulletin.csv"
 
+#define SEPARATOR ';'
+// #define SEPARATOR ','
+
 #endif

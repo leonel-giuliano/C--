@@ -4,6 +4,7 @@
 using namespace std;
 
 #include "students.h"
+#include "main.h"
 #include "error.h"
 
 void writeStudents(Student *students, fstream *fp) {
@@ -36,7 +37,7 @@ void writeStudents(Student *students, fstream *fp) {
     }
 }
 
-void readData(Student *students, fstream *fp) {
+int countStudents(Student *students, fstream *fp) {
     auto studentsAmount = -1;
     // To ignore the column names
 
@@ -45,15 +46,38 @@ void readData(Student *students, fstream *fp) {
         if(ch == '\n') studentsAmount++;
         // Count the amount of lines to know the students
 
+    return studentsAmount;
+}
+
+void readData(Student *students, fstream *fp) {
+    auto studentsAmount = countStudents(students, fp);
+
     students = new Student[studentsAmount];
     if(!students) {
         fp->close();
 
         errorHandler(ERROR_MEMORY);
     }
+    // Allocate the array of students
 
     string columnNames;
+    fp->clear();
+    // Needed to clear the EOF state
+
     fp->seekg(0, fstream::beg);
     getline(*fp, columnNames);
     // Skips the column names to start reading the data
+
+    for(auto i = 0; i < studentsAmount; i++) {
+        string name;
+        char ch;
+        while((ch = fp->get()) != SEPARATOR && ch != '\n' && ch != EOF)
+            name += ch;
+        // Reads char by char to have 2 delimiters
+
+        students[i].setName(name);
+        // Save the name
+
+        cout << "Student: " << students[i].getName() << endl;
+    }
 }

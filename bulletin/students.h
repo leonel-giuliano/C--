@@ -20,12 +20,14 @@ class Student {
     mark_t *marks;
 
     public:
+        void setName(string _Name);
         void scanName(int _Num);
         
         string getName(void);
 };
 
 void writeStudents(Student *_StudentsArray, fstream *_Stream);
+int countStudents(Student *_StudentsArray, fstream *_Stream);
 void readData(Student *_StudentsArray, fstream *_Stream);
 
 #endif
