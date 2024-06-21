@@ -20,4 +20,11 @@ int main(int argc, char *argv[]) {
 
     fpBulletin.open(filePath, ios::out);
     if(!fpBulletin) errorHandler(ERROR_FILE);
+
+    writeStudents(students, &fpBulletin);
+
+    fpBulletin.close();
+    delete[] students;
+
+    return 0;
 }

@@ -1,32 +1,29 @@
 # Nombre del compilador
-CC = gcc
-
-# Flags del compilador
-CFLAGS = -Wall -Wextra -I.
+CXX = g++
 
 # Directorios
-OUTPUT_DIR = output
+SRC_DIR = .
+OUT_DIR = ./output
 
-# Archivos fuente y objetos
-SRCS = $(wildcard *.c)
-OBJS = $(patsubst %.c, $(OUTPUT_DIR)/%.o, $(SRCS))
+# Archivos fuente y de encabezado
+SRC_FILES = $(wildcard $(SRC_DIR)/*.cpp)
+OBJ_FILES = $(patsubst $(SRC_DIR)/%.cpp, $(OUT_DIR)/%.o, $(SRC_FILES))
 
-# Ejecutable
-EXEC = $(OUTPUT_DIR)/main.exe
+# Nombre del ejecutable
+EXEC = $(OUT_DIR)/main.exe
 
-# Reglas
-all: $(OUTPUT_DIR) $(EXEC)
+# Flags de compilación
+CXXFLAGS = -Wall -I$(SRC_DIR)
 
-$(OUTPUT_DIR):
-	mkdir -p $(OUTPUT_DIR)
+# Regla para compilar el ejecutable
+$(EXEC): $(OBJ_FILES)
+	$(CXX) $(CXXFLAGS) -o $@ $^
 
-$(EXEC): $(OBJS)
-	$(CC) $(OBJS) -o $(EXEC)
+# Regla para compilar archivos .cpp a .o
+$(OUT_DIR)/%.o: $(SRC_DIR)/%.cpp
+	$(CXX) $(CXXFLAGS) -c $< -o $@
 
-$(OUTPUT_DIR)/%.o: %.c
-	$(CC) $(CFLAGS) -c $< -o $@
-
+# Regla para limpiar los archivos generados
+.PHONY: clean
 clean:
-	rm -rf $(OUTPUT_DIR)
-
-.PHONY: all clean
+	rm -f $(OUT_DIR)/*.o $(EXEC)
