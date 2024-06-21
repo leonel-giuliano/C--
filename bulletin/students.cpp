@@ -1,18 +1,23 @@
 #include <iostream>
 #include <fstream>
+#include <limits>
 using namespace std;
 
 #include "students.h"
 #include "error.h"
 
 void writeStudents(Student *students, fstream *fp) {
-    uint8_t studentsAmount;
+    int studentsAmount;
 
     *fp << "Students" << endl;
     // Prints the column name
 
     cout << "Amount of students: ";
     cin >> studentsAmount;
+
+    cin.clear();
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    // Make sure to empty the cin
 
     students = new Student[studentsAmount];
     if(!students) errorHandler(ERROR_MEMORY);
@@ -23,5 +28,6 @@ void writeStudents(Student *students, fstream *fp) {
         // Scan the name of every student
 
         *fp << students[i].getName() << endl;
+        fp->flush();
     }
 }

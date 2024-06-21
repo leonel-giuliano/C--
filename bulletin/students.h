@@ -2,15 +2,14 @@
 #define __STUDENTS_H__
 
 #include <iostream>
-#include <stdint.h>
 using namespace std;
 
 typedef struct _mark {
-    uint8_t i;
+    int i;
 
     string name;
-    uint8_t value;
-    uint8_t percentage;
+    int value;
+    int percentage;
 
     struct _mark *next;
     // Make a dynamic list
@@ -21,7 +20,7 @@ class Student {
     mark_t *marks;
 
     public:
-        void scanName(uint8_t _Num);
+        void scanName(int _Num);
         
         string getName(void);
 };

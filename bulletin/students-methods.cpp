@@ -4,11 +4,12 @@ using namespace std;
 
 #include "students.h"
 
-void Student::scanName(uint8_t num) {
+void Student::scanName(int num) {
     cout << "Name of the " << num << "° student: ";
-    cin >> name;    
+    getline(cin, name);
+    // Scan an entire line
 }
 
 string Student::getName(void) {
-    return name;   
+    return name;
 }
