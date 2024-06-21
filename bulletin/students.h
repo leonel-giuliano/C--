@@ -26,5 +26,6 @@ class Student {
 };
 
 void writeStudents(Student *_StudentsArray, fstream *_Stream);
+void readData(Student *_StudentsArray, fstream *_Stream);
 
 #endif

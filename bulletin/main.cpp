@@ -10,7 +10,6 @@ int main(int argc, char *argv[]) {
     if(argc > ARGC_FILE) errorHandler(ERROR_ARG);
 
     string filePath;
-    fstream fpBulletin;
     Student *students = NULL;
     // Dynamic list with all the students
 
@@ -18,10 +17,18 @@ int main(int argc, char *argv[]) {
     else filePath = PRED_PATH;
     // Select path depending on the arguments
 
-    fpBulletin.open(filePath, ios::out);
-    if(!fpBulletin) errorHandler(ERROR_FILE);
 
-    writeStudents(students, &fpBulletin);
+    fstream fpBulletin(filePath);
+    // Opens in "r+"
+    if(!fpBulletin) {
+        fpBulletin.open(filePath, ios::out);
+        if(!fpBulletin) errorHandler(ERROR_FILE);
+        // Opens in "w+"
+
+        writeStudents(students, &fpBulletin);
+        // Writes the students in case the
+        // file wasn't created
+    } else readData(students, &fpBulletin);
 
     fpBulletin.close();
     delete[] students;

@@ -20,7 +20,11 @@ void writeStudents(Student *students, fstream *fp) {
     // Make sure to empty the cin
 
     students = new Student[studentsAmount];
-    if(!students) errorHandler(ERROR_MEMORY);
+    if(!students) {
+        fp->close();
+
+        errorHandler(ERROR_MEMORY);
+    }
     // Allocate the list of students
 
     for(auto i = 0; i < studentsAmount; i++) {
@@ -30,4 +34,26 @@ void writeStudents(Student *students, fstream *fp) {
         *fp << students[i].getName() << endl;
         fp->flush();
     }
+}
+
+void readData(Student *students, fstream *fp) {
+    auto studentsAmount = -1;
+    // To ignore the column names
+
+    char ch;
+    while((ch = fp->get()) != EOF)
+        if(ch == '\n') studentsAmount++;
+        // Count the amount of lines to know the students
+
+    students = new Student[studentsAmount];
+    if(!students) {
+        fp->close();
+
+        errorHandler(ERROR_MEMORY);
+    }
+
+    string columnNames;
+    fp->seekg(0, fstream::beg);
+    getline(*fp, columnNames);
+    // Skips the column names to start reading the data
 }
