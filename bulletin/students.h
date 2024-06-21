@@ -19,6 +19,13 @@ typedef struct _mark {
 class Student {
     string name;
     mark_t *marks;
+
+    public:
+        void scanName(uint8_t _Num);
+        
+        string getName(void);
 };
+
+void writeStudents(Student *_StudentsArray, fstream *_Stream);
 
 #endif
